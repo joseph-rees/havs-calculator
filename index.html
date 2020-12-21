@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8 />
+    <title>HAVS JavaScript test</title>
+    <style type="text/css">
+        body {
+            margin: 30px;
+        }
+
+    </style>
+    <script>
+        function calculateVal() {
+            var A5 = "Daily exposure is above the ELV.";
+            var B5 = "Daily exposure is above the EAV but below the ELV.";
+            var C5 = "Daily exposure is below the EAV.";
+            var mag1 = document.getElementById("firstMagnitude").value;
+            var mag2 = document.getElementById("secondMagnitude").value;
+            var mag3 = document.getElementById("thirdMagnitude").value;
+            var time1 = document.getElementById("firstTime").value;
+            var time2 = document.getElementById("secondTime").value;
+            var time3 = document.getElementById("thirdTime").value;
+            var msexp = ((((mag1 * ((time1 / 8) ** 0.5)) ** 2) + ((mag2 * ((time2 / 8) ** 0.5)) ** 2) + ((mag3 * ((time3 / 8) ** 0.5)) ** 2)) ** 0.5);
+            var pexp = (((mag1 * mag1) * 2) * time1) + (((mag2 * mag2) * 2) * time2) + (((mag3 * mag3) * 2) * time3);
+            document.getElementById("msexposure").innerHTML = msexp.toFixed(2);
+            document.getElementById("pointsexposure").innerHTML = pexp.toFixed(0);
+            if (msexp >= 5) {
+                document.getElementById("message").innerHTML = A5;
+            } else if (2.5 <= msexp && msexp < 5) {
+                document.getElementById("message").innerHTML = B5;
+            } else {
+                document.getElementById("message").innerHTML = C5;
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <form>
+        Tool/process 1: <input type="text" /><input type="number" min="0" id="firstMagnitude" placeholder="Magnitude (in m/s²)" /><input type="number" min="0" id="firstTime" placeholder="Time (in hours)" /><br>
+        Tool/process 2: <input type="text" /><input type="number" min="0" id="secondMagnitude" placeholder="Magnitude (in m/s²)" /><input type="number" min="0" id="secondTime" placeholder="Time (in hours)" /><br>
+        Tool/process 3: <input type="text" /><input type="number" min="0" id="thirdMagnitude" placeholder="Magnitude (in m/s²)" /><input type="number" min="0" id="thirdTime" placeholder="Time (in hours)" /><br>
+        <input type="button" class="btn btn-primary" onClick="calculateVal()" Value="Calculate" />
+    </form>
+    <p>
+        Daily exposure in m/s² A(8): <span id="msexposure"></span><br>
+        Total exposure points: <span id="pointsexposure"></span><br>
+        <span id="message"></span>
+    </p>
+</body>
+
+</html>
